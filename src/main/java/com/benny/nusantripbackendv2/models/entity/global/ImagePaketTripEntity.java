@@ -7,61 +7,52 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.text.DateFormat;
 
 @Entity
-@Table(name = "tbl_review_paket_trip")
-class ReviewPaketTripEntity implements Serializable {
-
+@Table(name = "tbl_image_paket_trip")
+public class ImagePaketTripEntity implements Serializable {
+    //id identity
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_review_paket_trip")
-    private long idReviewPaketTrip;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_public_profile_user", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private PublicProfileUserEntity publicProfileUserEntity;
+    @Column(name = "id_image_paket_trip")
+    private long idImagePaketTrip;
+    //fk pakettrip
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_paket_trip", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private PaketTripEntity paketTripEntity;
-    @Column(name = "ulasan")
-    private String ulasan;
+    //image blob
+    @Column(name = "image")
+    private Blob image;
+    //created at
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "created_at")
     private DateFormat createdAt;
+    //updated at
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "updated_at")
     private DateFormat updatedAt;
 
-    ReviewPaketTripEntity() {
+    public ImagePaketTripEntity() {
     }
 
-    public ReviewPaketTripEntity(long idReviewPaketTrip, PublicProfileUserEntity publicProfileUserEntity, PaketTripEntity paketTripEntity, String ulasan, DateFormat createdAt, DateFormat updatedAt) {
-        this.idReviewPaketTrip = idReviewPaketTrip;
-        this.publicProfileUserEntity = publicProfileUserEntity;
+    public ImagePaketTripEntity(long idImagePaketTrip, PaketTripEntity paketTripEntity, Blob image, DateFormat createdAt, DateFormat updatedAt) {
+        this.idImagePaketTrip = idImagePaketTrip;
         this.paketTripEntity = paketTripEntity;
-        this.ulasan = ulasan;
+        this.image = image;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public long getIdReviewPaketTrip() {
-        return idReviewPaketTrip;
+    public long getIdImagePaketTrip() {
+        return idImagePaketTrip;
     }
 
-    public void setIdReviewPaketTrip(long idReviewPaketTrip) {
-        this.idReviewPaketTrip = idReviewPaketTrip;
-    }
-
-    public PublicProfileUserEntity getPublicProfileUserEntity() {
-        return publicProfileUserEntity;
-    }
-
-    public void setPublicProfileUserEntity(PublicProfileUserEntity publicProfileUserEntity) {
-        this.publicProfileUserEntity = publicProfileUserEntity;
+    public void setIdImagePaketTrip(long idImagePaketTrip) {
+        this.idImagePaketTrip = idImagePaketTrip;
     }
 
     public PaketTripEntity getPaketTripEntity() {
@@ -72,12 +63,12 @@ class ReviewPaketTripEntity implements Serializable {
         this.paketTripEntity = paketTripEntity;
     }
 
-    public String getUlasan() {
-        return ulasan;
+    public Blob getImage() {
+        return image;
     }
 
-    public void setUlasan(String ulasan) {
-        this.ulasan = ulasan;
+    public void setImage(Blob image) {
+        this.image = image;
     }
 
     public DateFormat getCreatedAt() {
